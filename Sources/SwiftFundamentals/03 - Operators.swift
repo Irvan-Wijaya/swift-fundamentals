@@ -59,14 +59,22 @@ let canViewContent = isUserLoggedIn && hasPremiumAccess
 // 1. Closed Range Operator (...)
 // Includes the final value.
 // Use Case: Iterating through precise ranges.
-let scoreRange = 1...100
+let scoreRange = 1...100 // 1 - 100
 
 // 2. Half-Open Range Operator (..<)
 // Excludes the final value.
 // Use Case: Zero-based arrays (preventing Index Out of Bounds errors).
 let names = ["Alice", "Bob", "Charlie"]
-let count = names.count
-// for i in 0..<count { ... } // Safe iteration
+for i in 0..<names.count {
+    print(names[i])
+} // Alice Bob Charlie
+print("Total names: \(names.count)") // Total names: 3
+// for i in 0..<count { ... } // Safe iteration -> 0,1,2 (Upper bound not included) | if using closed range will crash index out of range
+
+// 3. One Side Range Operator (1...)
+let numbers = [1,2,3,4,5]
+let slice = numbers[2...]
+print("\(slice)") // [3, 4, 5]
 
 // MARK: F. Nil-Coalescing & Optional Operators
 /// Handling Optionals safely without verbose `if-let` structures.
@@ -80,7 +88,7 @@ let displayName = serverName ?? "Guest" // Returns "Guest"
 // 2. Optional Chaining (?)
 // Safely accesses properties of an optional. If any link is nil, the whole chain fails gracefully to nil.
 // Industry Use Case: Deeply nested API responses.
-// let zipCode = user?.address?.zipCode // Returns nil if user OR address is nil.
+let zipCode = user?.address?.zipCode // Returns nil if user OR address is nil (If one is nil → final result is nil).
 
 // MARK: G. Ternary Conditional Operator
 /// A concise one-line if-else statement (`condition ? trueValue : falseValue`).
@@ -90,6 +98,11 @@ let displayName = serverName ?? "Guest" // Returns "Guest"
 
 let themeMode = "Dark"
 let backgroundColor = (themeMode == "Dark") ? "Black" : "White"
+
+// UI State Rendering
+button.isHidden = !isLoggedIn
+// better than
+button.isHidden = isLoggedIn ? false : true
 
 // Readable vs Unreadable:
 // Good: let color = isSelected ? .red : .blue

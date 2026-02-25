@@ -58,8 +58,7 @@ numbers.remove(at: 0) // Shifts indices 1-5 to 0-4.
 /// The most common crash in iOS Development: "Index Out of Range".
 
 let counts = [1, 2, 3]
-
-// let danger = counts[99] // ❌ CRASH: Fatal error: Index out of range
+let danger = counts[99] // ❌ CRASH: Fatal error: Index out of range
 
 // Safe Approach (Industry Standard):
 // Always check bounds or use safe access extensions before accessing arbitrary indices.
@@ -73,3 +72,48 @@ if counts.indices.contains(99) {
 /// 1. Order matters (e.g., Transaction History, To-Do List).
 /// 2. Duplicate values are allowed.
 /// 3. Random access by index is required.
+
+// MARK: F. Higher-Order Function
+/// map,  filter, reduce
+//  Doesnt modify the original array, produced new array, suitable value semantics Swift.
+
+// 1. map ->  change each element into another form and the number of elements remains the same
+let numbers = [1, 2, 3]
+let doubled = numbers.map { $0 * 2 } // [2, 4, 6]
+let names = users.map { $0.name } // From [User] → [String]
+
+// 2. filter -> select some, discard others
+let evenNumbers = numbers.filter { $0 % 2 == 0 } // [2]
+let activeUsers = users.filter { $0.isActive }
+
+// 3. reduce —> combine Everything into one
+// structure:
+// reduce(initialValue) { partialResult, element in
+//     return new partialResult
+// }
+let sum = [1, 2, 3].reduce(0) { $0 + $1 } // 6 -> (((0 + 1) + 2) + 3) → 6
+let totalBalance = accounts
+    .map { $0.balance }
+    .reduce(0, +)
+
+struct CartItem {
+    let price: Double
+    let quantity: Int
+}
+let cart = [
+    CartItem(price: 10, quantity: 2),
+    CartItem(price: 25, quantity: 1),
+    CartItem(price: 25, quantity: 1)
+
+]
+let total = cart.reduce(0) {
+    $0 + ($1.price * Double($1.quantity)) // 70
+}
+
+// simple implementation
+let numbers = [1, 2, 3, 4]
+let result = numbers
+    .filter { $0 % 2 == 0 }
+    .map { $0 * 10 }
+    .reduce(0, +)
+print(result) // 60
