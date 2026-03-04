@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  SwiftFundamentals
-//
-//  Created by Irvan Wijaya on 27/02/26.
-//
-
 import Foundation
 
 // MARK: - Overview
