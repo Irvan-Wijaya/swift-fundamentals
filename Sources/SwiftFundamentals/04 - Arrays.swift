@@ -111,9 +111,18 @@ let total = cart.reduce(0) {
 }
 
 // simple implementation
+// order matters || map → filter ≠ filter → map
+
 let numbers = [1, 2, 3, 4]
 let result = numbers
     .filter { $0 % 2 == 0 }
     .map { $0 * 10 }
     .reduce(0, +)
 print(result) // 60
+
+let data = [1, 2, 3, 4]
+let result = data
+    .map { $0 * 10 }
+    .filter { $0 % 2 == 0 }
+    .reduce(0, +)
+print(result) // 100
