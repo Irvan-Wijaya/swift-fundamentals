@@ -159,10 +159,71 @@ case let .error(message):
     print(message)
 }
 
+// MARK: Example Implementatiom
+enum TransactionStatus {
+    case pending
+    case success(receiptID: String, timestamp: Date)
+    case failed(reason: ErrorReason)
+    
+    enum ErrorReason {
+        case insufficientFunds
+        case timeout
+        case systemMaintenance
+    }
+}
+
+extension TransactionStatus.ErrorReason {
+    var message: String {
+        switch self {
+        case .insufficientFunds:
+            return "Saldo tidak cukup. Silakan top-up."
+        case .timeout:
+            return "Permintaan tidak dapat diproses. Silakan coba lagi."
+        case .systemMaintenance:
+            return "Sistem sedang maintenance. Silakan hubungi support."
+        }
+    }
+}
+
+func formatDate(_ date: Date) -> String {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .medium
+    formatter.timeStyle = .short
+    return formatter.string(from: date)
+}
+
+func handleTransaction(status: TransactionStatus) {
+    switch status {
+    case .pending:
+        print("Menampilkan loading spinner...")
+        
+    case .success(let receipt, let time):
+        let formattedTime = formatDate(time)
+        print("Transaksi berhasil. Resi: \(receipt) pada \(formattedTime)")
+        
+    case .failed(let reason):
+        print(reason.message)
+    }
+}
+
+// 1. Pending
+handleTransaction(status: .pending)
+
+// 2. Success
+let successStatus = TransactionStatus.success(
+    receiptID: "ABC123XYZ",
+    timestamp: Date()
+)
+handleTransaction(status: successStatus)
+
+// 3. Failed
+let failedStatus = TransactionStatus.failed(reason: .insufficientFunds)
+handleTransaction(status: failedStatus)
+
+
 /// Engineering Insight:
 /// - Enum guarantees only ONE state at a time
 /// - Eliminates invalid combinations
-
 
 // MARK: - Summary
 /// Use enum when:
