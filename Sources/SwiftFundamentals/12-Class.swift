@@ -139,3 +139,42 @@ class ExampleController {
         print("Handled")
     }
 }
+
+//MARK: Simpe Implementation
+class SessionManager {
+    static let shared = SessionManager()
+    
+    var isLoggedIn: Bool = false
+    var userToken: String?
+    
+    private init() {}
+    
+    func login(token: String) {
+        self.isLoggedIn = true
+        self.userToken = token
+        print("User login dengan token: \(token)")
+    }
+    
+    func logout() {
+        self.isLoggedIn = false
+        self.userToken = nil
+        print("User logout")
+    }
+    
+    deinit {
+        print("SessionManager dihapus dari memory")
+    }
+}
+
+let session1 = SessionManager.shared
+let session2 = SessionManager.shared
+
+if session1 === session2 {
+    print("Mereka adalah objek yang sama di memory")
+}
+
+session1.login(token: "ABC123")
+print(session2.userToken ?? "No Token") // prove shared state
+
+session2.logout()
+print(session1.isLoggedIn) // false
