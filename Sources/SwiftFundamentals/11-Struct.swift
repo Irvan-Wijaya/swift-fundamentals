@@ -80,3 +80,47 @@ struct RewardPointSystem {
 
 var customerRewards = RewardPointSystem()
 customerRewards.addPoints(500) // Output: Total points: 500
+
+
+//MARK: Example Simple Implementation
+enum TransactionSource {
+    case shopping
+    case promo
+    case referral
+}
+
+// MARK: - Transaction Model
+struct PoinXtraTransaction {
+    let transactionID: String
+    let pointsEarned: Int
+    let date: Date
+    let source: TransactionSource
+}
+
+// MARK: - Computed Property Extension
+extension PoinXtraTransaction {
+    var description: String {
+        return "ID: \(transactionID), Points: \(pointsEarned), Source: \(source)"
+    }
+}
+
+// MARK: - User Profile
+struct UserProfile {
+    let name: String
+    var email: String
+    
+    mutating func updateEmail(newEmail: String) {
+        self.email = newEmail
+    }
+}
+
+let transaction = PoinXtraTransaction(
+    transactionID: "TRX001",
+    pointsEarned: 100,
+    date: Date(),
+    source: .shopping
+)
+print(transaction.description)
+var user = UserProfile(name: "Van", email: "van@email.com")
+user.updateEmail(newEmail: "new@email.com")
+print(user)
