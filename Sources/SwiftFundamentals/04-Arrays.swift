@@ -80,6 +80,11 @@ if counts.indices.contains(99) {
 // 1. map ->  change each element into another form and the number of elements remains the same
 let numbers = [1, 2, 3]
 let doubled = numbers.map { $0 * 2 } // [2, 4, 6]
+// same as
+// numbers.map { number in
+//     number * 2
+// }
+
 let names = users.map { $0.name } // From [User] → [String]
 
 // 2. filter -> select some, discard others
@@ -91,6 +96,7 @@ let activeUsers = users.filter { $0.isActive }
 // reduce(initialValue) { partialResult, element in
 //     return new partialResult
 // }
+// note: .reduce(0) remember is inital value, if .reduce(10) then the resuls is 16 because start from 10
 let sum = [1, 2, 3].reduce(0) { $0 + $1 } // 6 -> (((0 + 1) + 2) + 3) → 6
 let totalBalance = accounts
     .map { $0.balance }
@@ -124,5 +130,12 @@ let data = [1, 2, 3, 4]
 let result = data
     .map { $0 * 10 }
     .filter { $0 % 2 == 0 }
-    .reduce(0, +)
+    .reduce(0, +) // same as .reduce(0) { $0 + $1 } | because swift allow `reduce(initialValue, operation)`
 print(result) // 100
+
+
+// personal note
+// {} -> closure | code block inside parentheses without name/anonim
+// $0 -> shorthand argument name (nama parameter singkat), simplify $0 is current item/index is being processed now. $1 -> second paramter, $3 -> third parameter, such as index
+
+

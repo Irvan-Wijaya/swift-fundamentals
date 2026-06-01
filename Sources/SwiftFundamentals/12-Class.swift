@@ -14,6 +14,7 @@ class BankAccount {
     var balance: Double
     
     // Explicit initializer is strictly required
+    // Classes a way defining a blueprint, and when run the app. be able to initialize class to actual object(house) | (blueprint -> init() -> house)
     init(accountName: String, balance: Double) {
         self.accountName = accountName
         self.balance = balance
@@ -152,7 +153,7 @@ class SessionManager {
     func login(token: String) {
         self.isLoggedIn = true
         self.userToken = token
-        print("User login dengan token: \(token)")
+        print("User login with token: \(token)")
     }
     
     func logout() {
@@ -162,7 +163,7 @@ class SessionManager {
     }
     
     deinit {
-        print("SessionManager dihapus dari memory")
+        print("SessionManager removed from memory")
     }
 }
 
@@ -170,7 +171,7 @@ let session1 = SessionManager.shared
 let session2 = SessionManager.shared
 
 if session1 === session2 {
-    print("Mereka adalah objek yang sama di memory")
+    print("Same object in memory")
 }
 
 session1.login(token: "ABC123")
@@ -178,3 +179,51 @@ print(session2.userToken ?? "No Token") // prove shared state
 
 session2.logout()
 print(session1.isLoggedIn) // false
+
+/// `Struct VS Class`
+//    Use Struct when:
+//    - The object represents data only.
+//    - You want value semantics (copied when assigned or passed).
+//    - Changes should not affect other copies.
+//    - No inheritance is needed.
+//
+//    Examples:
+//    - User
+//    - Product
+//    - Address
+//    - APIResponse
+//    - Coordinate
+//
+//    Why?
+//    - Safer and more predictable.
+//    - Better performance in many cases.
+//    - Recommended by Swift as the default choice.
+//
+//    --------------------------------------------------
+//
+//    Use Class when:
+//    - You need reference semantics (shared instance).
+//    - Multiple objects should see the same state changes.
+//    - Inheritance is required.
+//    - The object has a lifecycle managed by ARC.
+//
+//    Examples:
+//    - ViewController
+//    - ViewModel
+//    - SessionManager
+//    - NetworkManager
+//    - CacheManager
+//
+//    Why?
+//    - Supports shared mutable state.
+//    - Supports inheritance.
+//    - Suitable for services, managers, and framework objects.
+//
+//    --------------------------------------------------
+//
+//    Rule of Thumb:
+//    Start with Struct, move to class when necessary - Apple Team
+//    Switch to Class only when you need:
+//    1. Shared state
+//    2. Inheritance
+//    3. Reference semantics
